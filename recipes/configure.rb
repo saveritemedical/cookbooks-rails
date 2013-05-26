@@ -41,13 +41,15 @@ node[:deploy].each do |application, deploy|
     end
   end
 
+	elasticsearch_server = node[:opsworks][:layers][:elasticsearch][:instances].keys.first rescue nil
+	elasticsearch_ip = node[:opsworks][:layers][:elasticsearch][:instances][elasticsearch_server][:private_dns_name]
   template "#{deploy[:deploy_to]}/shared/config/elasticsearch.yml" do
     source "elasticsearch.yml.erb"
     cookbook 'rails'
     mode "0660"
     group deploy[:group]
     owner deploy[:user]
-    variables(:elasticsearch => deploy[:elasticsearch], :environment => deploy[:rails_env])
+    variables(:elasticsearch_ip => elasticsearch_ip, :environment => deploy[:rails_env])
 
     notifies :run, resources(:execute => "restart Rails app #{application}")
 
