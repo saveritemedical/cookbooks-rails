@@ -1,0 +1,6 @@
+<% (['development', 'production'] + [@environment]).uniq.each do |env| -%>
+<%= env %>:
+  host: <%= @elasticsearch[:host] || 'localhost' %>
+  port: <%= @elasticsearch[:port] %>
+
+<% end -%>
