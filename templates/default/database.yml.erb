@@ -6,6 +6,7 @@
   host: <%= @database[:host] || 'localhost' %>
   username: <%= @database[:username] %>
   password: <%= @database[:password] %>
+  port: <%= @database[:port] || 3306 %>
   reconnect: <%= @database[:reconnect] ? 'true' : 'false' %>
 
 <% end -%>
